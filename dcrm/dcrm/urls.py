@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from webtsite.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('webtsite.urls'))
+    path('', include('webtsite.urls')),
+    path('wel/', NotasView.as_view(), name="Notas")
 ]

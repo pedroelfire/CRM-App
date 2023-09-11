@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from . serializer import *
 
 # Create your views here.
 def home(request):
@@ -28,3 +32,24 @@ def logout_user(request):
 
 def register_user(request):
     return render(request, 'register.html', {})
+
+def verify_room(request):
+    if request.method == "POST":
+        roomcode = request.POST.get("room_code")
+        if roomcode == "ola":
+            return HttpResponse("<h1>ola</h1>")
+
+class NotasView(APIView):
+    serializer_class = NotasSerializer 
+    
+    def get(self, request):
+        detail = [ {"id": detail.auto_increment_id,"title": detail.title,"description": detail.description} 
+        for detail in Notas.objects.all()]
+        return Response(detail)
+    
+    def post(self, request):
+  
+        serializer = NotasSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return  Response(serializer.data)

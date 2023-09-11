@@ -9,6 +9,8 @@ touch = "*"
 mysql = "*"
 mysql-connector-python = "*"
 mysql-connector = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

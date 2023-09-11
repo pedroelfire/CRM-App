@@ -1,26 +1,32 @@
-{%  extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <div class='col-md-6 offset-md-3'>
-{%if user.is_authenticated%}
-<h1>Hello</h1>
-{% else %}
-<h1>Login</h1>
-<br/>
-<form method="POST" action="{%url 'home'%}">
-    {% csrf_token %}
-    <form>
-        <div class="mb-3">
-          <input type="text" class="form-control" aria-describedby="emailHelp" name="username" placeholder="username" required>
-        </div>
-        <br/>
-        <div class="mb-3">
-          <input type="password" class="form-control" name="password" placeholder="password" required>
-        </div>
-        <br/>
-        <button type="submit" class="btn btn-secondary">Login</button>
-      </form>
-</form>
-
+  {% if user.is_authenticated %}
+    <h1>Hello, enter your room code to see a message</h1>
+    <form method="POST" action="{% url 'room' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputEmail1">RoomCode</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="room_code" placeholder="Enter RoomCode">
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  {% else %}
+    <h1>Login</h1>
+    <br/>
+    <form method="POST" action="{% url 'home' %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="username" placeholder="username" required>
+      </div>
+      <br/>
+      <div class="mb-3">
+        <input type="password" class="form-control" name="password" placeholder="password" required>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-secondary">Login</button>
+    </form>
+  {% endif %}
 </div>
-{% endif %}
-{%endblock%}
+{% endblock %}
